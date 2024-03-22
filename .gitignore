@@ -1,0 +1,7 @@
+deployment/.terraform/*
+deployment/.terraform/
+deployment/.env
+deployment/terraform.tfstate
+deployment/terraform.tfstate.backup
+deployment/.terraform.lock.hcl
+deployment/.terraform.tfstate.lock.info

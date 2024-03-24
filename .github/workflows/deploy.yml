@@ -21,7 +21,15 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
+      - name: Check if ECR repository already exists
+        id: check-ecr-repo
+        run: |
+          aws ecr describe-repositories --repository-names backend-repo --region us-east-1 > /dev/null 2>&1 || exit 0
+          echo "::set-output name=repo_exists::true"
+        continue-on-error: true
+
       - name: Create ECR repository
+        if: steps.check-ecr-repo.outputs.repo_exists != 'true'
         run: |
           aws ecr create-repository --repository-name backend-repo --region us-east-1
           
@@ -103,4 +111,4 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: docker-compose -f deployment/docker-compose.yml run --rm terraform destroy -auto-approve
+        run: docker-compose -f deployment/docker-compose.yml run --rm terraform apply -auto-approve

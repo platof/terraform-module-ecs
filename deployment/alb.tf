@@ -44,7 +44,7 @@ module "alb" {
     ex-https = {
       port            = 443
       protocol        = "HTTPS"
-      certificate_arn = "arn:aws:acm:us-east-1:253449359474:certificate/c8df709d-93f1-47e9-a670-7ce4ef443ef3"
+      certificate_arn = "arn:aws:acm:us-east-1:253449359474:certificate/c8df709d-XXXX-47e9-a670-XXXXXf443ef3"
 
       forward = {
         target_group_key = "ex_ecs"
